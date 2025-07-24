@@ -1,9 +1,7 @@
-
 import 'package:cocodataset_mobile_flutter/features/coco_explorer/domain/entity/images_segmentations_entity.dart';
 import 'package:cocodataset_mobile_flutter/features/coco_explorer/presentation/utils/helper/image_size.dart';
 import 'package:cocodataset_mobile_flutter/features/coco_explorer/presentation/widget/images_list.dart';
 import 'package:flutter/material.dart';
-
 
 class ImagesPage extends StatefulWidget {
   final List<ImagesSegmentationsEntity> images;
@@ -63,7 +61,7 @@ class _ImagesPageState extends State<ImagesPage> {
           return Center(child: Text('Error: ${snapshot.error}'));
         }
         if (!snapshot.hasData) {
-          return SizedBox.shrink();
+          return const Center(child: CircularProgressIndicator.adaptive());
         }
         return ImagesList(
           imageSegmentations: widget.images,

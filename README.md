@@ -6,7 +6,6 @@ A mobile application built with Flutter that allows you to filter and search COC
 
 This app lets you list and select categories from the COCO Dataset.  
 Based on selected categories, it fetches related images.  
-It uses Flutter with Riverpod for state management.
 
 ## Features
 
@@ -14,7 +13,9 @@ It uses Flutter with Riverpod for state management.
 - Search bar with autocomplete support
 - Display images based on selected categories
 - Toggle button to show/hide filter panel
-- Loading and error state handling
+- Handling loading and error states
+- Displaying segmentations over images
+- Filtering segmentations by category
 
 ## 🛠 Technologies & Packages Used
 

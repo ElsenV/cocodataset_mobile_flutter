@@ -1,5 +1,7 @@
 import 'package:cocodataset_mobile_flutter/core/utils/exceptions/exceptions.dart';
 import 'package:cocodataset_mobile_flutter/core/utils/helpers/either.dart';
+import 'package:cocodataset_mobile_flutter/features/coco_explorer/data/model/images_list_dto.dart';
+import 'package:cocodataset_mobile_flutter/features/coco_explorer/data/model/images_segmentation_dto.dart';
 import 'package:cocodataset_mobile_flutter/features/coco_explorer/data/remote_data_source/images_query_remote_data_source.dart';
 import 'package:cocodataset_mobile_flutter/features/coco_explorer/domain/entity/images_segmentations_entity.dart';
 import 'package:cocodataset_mobile_flutter/features/coco_explorer/domain/repositories/i_image_query_repository.dart';
@@ -38,15 +40,21 @@ class ImageQueryRepositoryImpl implements IImagesQueryRepository {
     CancelToken? cancelToken,
   }) async {
     try {
-      final imagesList = await _imagesQueryRemoteDataSource.getImagesByIds(
+      final imagesFuture = _imagesQueryRemoteDataSource.getImagesByIds(
         data: imageData,
         cancelToken: cancelToken,
       );
-      final segmentationsList = await _imagesQueryRemoteDataSource
+      final segmentationsFuture = _imagesQueryRemoteDataSource
           .getImageSegmentationByIds(
             data: segmentationData,
             cancelToken: cancelToken,
           );
+
+      final response = await Future.wait([imagesFuture, segmentationsFuture]);
+
+      List<ImagesListDto> imagesList = response[0] as List<ImagesListDto>;
+      List<ImagesSegmentationsListDto> segmentationsList =
+          response[1] as List<ImagesSegmentationsListDto>;
 
       final entities = imagesList.map((image) {
         final imageSegmentations = segmentationsList

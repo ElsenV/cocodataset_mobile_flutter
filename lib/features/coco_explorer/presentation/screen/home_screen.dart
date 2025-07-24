@@ -81,6 +81,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       .read(selectedItemIdsProvider.notifier)
                       .addItem(selectedCategory.id);
                   ref.read(shouldUpdateTextProvider.notifier).state = true;
+                  FocusScope.of(context).unfocus();
                 },
                 fieldViewBuilder:
                     (context, controller, focusNode, onEditingComplete) {
@@ -182,7 +183,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   );
                   return;
                 }
-
+                FocusScope.of(context).unfocus();
                 if (isFilterVisible) {
                   ref.read(filterToggleProvider.notifier).toggle();
                 }
